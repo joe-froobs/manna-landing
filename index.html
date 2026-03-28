@@ -12,86 +12,70 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #1A1816;
-      --bg-surface: #2D2A26;
+      --bg: #111110;
+      --app-bg: #1A1816;
+      --app-card: #2D2A26;
       --text: #F5F2ED;
-      --text-secondary: #A39E96;
+      --text-sec: #A39E96;
       --text-muted: #5C5650;
-      --accent: #D4A574;
-      --accent-glow: rgba(212, 165, 116, 0.15);
+      --gold: #D4A574;
+      --gold-glow: rgba(212, 165, 116, 0.15);
       --sage: #7B9E87;
+      --sage-glow: rgba(123, 158, 135, 0.15);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
     main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
       padding: 60px 24px 40px;
       min-height: 100vh;
-      max-width: 100%;
-      gap: 48px;
+      gap: 44px;
     }
 
     h1 {
-      font-size: clamp(42px, 10vw, 86px);
+      font-size: clamp(38px, 9vw, 76px);
       font-weight: 800;
-      letter-spacing: -4px;
+      letter-spacing: -3px;
       line-height: 1.05;
     }
 
-    h1 span {
-      color: var(--accent);
+    h1 span { color: var(--gold); }
+
+    .subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-sec);
+      font-weight: 300;
+      max-width: 400px;
     }
 
-    .badges {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .badges a {
-      display: block;
-      transition: transform 0.2s;
-    }
-
+    /* ─── BADGES ─── */
+    .badges { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .badges a { display: block; transition: transform 0.2s; }
     .badges a:hover { transform: scale(1.05); }
+    .badge-img { height: 52px; width: auto; }
 
-    .badge-img { height: 54px; width: auto; }
-
-    /* ─── PHONE MOCKUP ─── */
+    /* ─── PHONE ─── */
     .phone {
       position: relative;
-      width: 260px;
-      height: 520px;
+      width: 272px;
+      height: 556px;
       flex-shrink: 0;
     }
 
@@ -99,131 +83,266 @@
       width: 100%;
       height: 100%;
       background: #000;
-      border-radius: 44px;
-      border: 3px solid rgba(255, 255, 255, 0.08);
+      border-radius: 48px;
+      border: 3px solid rgba(255,255,255,0.08);
       box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.03),
-        0 40px 80px rgba(0, 0, 0, 0.6),
-        0 0 80px rgba(212, 165, 116, 0.04);
+        0 40px 80px rgba(0,0,0,0.5),
+        0 0 60px rgba(212,165,116,0.03);
       overflow: hidden;
-      position: relative;
     }
 
     .phone-screen {
       width: 100%;
       height: 100%;
-      background: var(--bg);
+      background: var(--app-bg);
       position: relative;
       overflow: hidden;
+      padding: 44px 0 0;
+    }
+
+    /* ─── DYNAMIC ISLAND ─── */
+    .dynamic-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 24px;
+      background: #000;
+      border-radius: 14px;
+      z-index: 10;
     }
 
     /* ─── SLIDES ─── */
     .slide {
       position: absolute;
-      inset: 0;
+      top: 44px;
+      left: 0;
+      right: 0;
+      bottom: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px 30px;
       opacity: 0;
       transition: opacity 0.8s ease;
+      overflow: hidden;
     }
 
     .slide.active { opacity: 1; }
 
-    /* Slide 1: Daily Verse */
-    .s-verse .verse-label {
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 12px;
+    /* ── Slide 1: Home Screen ── */
+    .s-home { padding: 12px 14px; }
+
+    .s-home .home-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
-    .s-verse .verse-ref {
-      font-size: 18px;
+    .s-home .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--app-card);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .s-home .greeting-text {
+      text-align: left;
+    }
+
+    .s-home .greeting-date {
+      font-size: 8px;
+      color: var(--text-muted);
+    }
+
+    .s-home .greeting-name {
+      font-size: 13px;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--text);
+    }
+
+    .s-home .streak-pill {
+      margin-left: auto;
+      background: var(--gold-glow);
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .s-home .verse-card {
+      background: var(--app-card);
+      border-radius: 14px;
+      padding: 14px;
       margin-bottom: 10px;
     }
 
-    .s-verse .verse-text {
-      font-size: 14px;
+    .s-home .verse-card-label {
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .s-home .verse-card-ref {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .s-home .verse-card-text {
+      font-size: 11px;
       font-style: italic;
-      color: var(--text);
-      line-height: 1.6;
-      margin-bottom: 16px;
-      padding: 0 8px;
+      color: rgba(245,242,237,0.85);
+      line-height: 1.55;
+      margin-bottom: 8px;
     }
 
-    .s-verse .verse-topics {
+    .s-home .topics-row {
       display: flex;
-      gap: 6px;
+      gap: 4px;
     }
 
-    .s-verse .topic-pill {
-      font-size: 9px;
-      padding: 4px 10px;
-      border-radius: 8px;
-      background: rgba(123, 158, 135, 0.15);
+    .s-home .topic {
+      font-size: 8px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--sage-glow);
       color: var(--sage);
       font-weight: 600;
     }
 
-    /* Slide 2: Prayer Lock */
-    .s-prayer .prayer-icon {
-      font-size: 40px;
+    .s-home .explain-btn {
+      background: var(--app-card);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .s-home .companion-row {
+      background: var(--app-card);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .s-home .comp-icon {
+      font-size: 22px;
+    }
+
+    .s-home .comp-info { flex: 1; text-align: left; }
+    .s-home .comp-name-text { font-size: 11px; font-weight: 700; color: var(--text); }
+    .s-home .comp-level-text { font-size: 8px; color: var(--text-muted); }
+
+    .s-home .quests-badge {
+      background: var(--gold);
+      color: #fff;
+      font-size: 7px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .s-home .discover-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      text-align: left;
       margin-bottom: 8px;
     }
 
-    .s-prayer .prayer-title {
-      font-size: 20px;
+    .s-home .discover-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .s-home .discover-card {
+      flex: 1;
+      background: var(--app-card);
+      border-radius: 12px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+
+    .s-home .discover-card-icon {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .s-home .discover-card-label {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Slide 2: Prayer Lock ── */
+    .s-prayer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .s-prayer .pray-title {
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.5px;
       margin-bottom: 4px;
     }
 
-    .s-prayer .prayer-sub {
-      font-size: 12px;
+    .s-prayer .pray-sub {
+      font-size: 10px;
       color: var(--text-muted);
       margin-bottom: 20px;
     }
 
     .s-prayer .timer-ring {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       position: relative;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
-    .s-prayer .timer-ring svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .s-prayer .ring-bg {
-      fill: none;
-      stroke: rgba(255, 255, 255, 0.04);
-      stroke-width: 3;
-    }
-
+    .s-prayer .timer-ring svg { width: 100%; height: 100%; }
+    .s-prayer .ring-bg { fill: none; stroke: rgba(255,255,255,0.04); stroke-width: 3; }
     .s-prayer .ring-fill {
       fill: none;
       stroke: var(--sage);
       stroke-width: 3;
       stroke-linecap: round;
-      stroke-dasharray: 339;
-      stroke-dashoffset: 85;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 95;
       transform: rotate(-90deg);
       transform-origin: center;
-      filter: drop-shadow(0 0 6px rgba(123, 158, 135, 0.4));
+      filter: drop-shadow(0 0 8px rgba(123,158,135,0.4));
       animation: prayerRing 3s ease-out forwards;
     }
 
     @keyframes prayerRing {
-      from { stroke-dashoffset: 339; }
-      to { stroke-dashoffset: 85; }
+      from { stroke-dashoffset: 377; }
+      to { stroke-dashoffset: 95; }
     }
 
     .s-prayer .timer-num {
@@ -231,187 +350,172 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -55%);
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 800;
       letter-spacing: -2px;
     }
 
     .s-prayer .timer-label {
-      font-size: 10px;
+      font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: var(--text-muted);
+      margin-bottom: 18px;
     }
 
-    /* Slide 3: Companion */
-    .s-companion .comp-emoji {
-      font-size: 64px;
+    .s-prayer .pray-prompt {
+      font-size: 11px;
+      font-style: italic;
+      color: var(--text-sec);
+      text-align: center;
+      padding: 0 10px;
+      line-height: 1.5;
+    }
+
+    /* ── Slide 3: No Cap Explanation ── */
+    .s-explain {
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .s-explain .exp-ref {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
       margin-bottom: 8px;
     }
 
-    .s-companion .comp-name {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 2px;
+    .s-explain .exp-verse {
+      font-size: 10px;
+      font-style: italic;
+      color: rgba(245,242,237,0.7);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    .s-companion .comp-level {
-      font-size: 12px;
-      color: var(--sage);
+    .s-explain .exp-toggle {
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      color: var(--gold);
       font-weight: 600;
-      margin-bottom: 16px;
+      background: var(--gold-glow);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
     }
 
-    .s-companion .xp-bar-outer {
-      width: 160px;
+    .s-explain .exp-text {
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.65;
+    }
+
+    /* ── Slide 4: Companion ── */
+    .s-comp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .s-comp .comp-emoji { font-size: 72px; margin-bottom: 8px; }
+    .s-comp .comp-name { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 2px; }
+    .s-comp .comp-stage { font-size: 12px; color: var(--sage); font-weight: 600; margin-bottom: 16px; }
+
+    .s-comp .xp-outer {
+      width: 170px;
       height: 6px;
       border-radius: 3px;
-      background: rgba(212, 165, 116, 0.15);
+      background: var(--gold-glow);
       overflow: hidden;
       margin-bottom: 6px;
     }
 
-    .s-companion .xp-bar-inner {
+    .s-comp .xp-inner {
       height: 100%;
       width: 0%;
       border-radius: 3px;
-      background: var(--accent);
+      background: var(--gold);
       animation: xpGrow 2s ease-out forwards;
     }
 
-    @keyframes xpGrow {
-      to { width: 65%; }
-    }
+    @keyframes xpGrow { to { width: 62%; } }
 
-    .s-companion .xp-label {
-      font-size: 10px;
+    .s-comp .xp-text {
+      font-size: 9px;
       color: var(--text-muted);
+      margin-bottom: 20px;
     }
 
-    /* Slide 4: Explanation */
-    .s-explain .explain-label {
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 12px;
+    .s-comp .quest-row {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
     }
 
-    .s-explain .explain-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      padding: 0 8px;
-      text-align: left;
-      margin-bottom: 16px;
-    }
-
-    .s-explain .nocap-toggle {
-      display: inline-flex;
+    .s-comp .quest-item {
+      background: var(--app-card);
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--accent);
-      font-weight: 600;
-      background: var(--accent-glow);
-      padding: 6px 14px;
-      border-radius: 8px;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--text);
     }
 
-    /* ─── TAGLINE + VALUE PROPS ─── */
+    .s-comp .quest-check {
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    .s-comp .quest-xp {
+      margin-left: auto;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* ─── DOTS ─── */
+    .slide-dots { display: flex; gap: 6px; justify-content: center; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); opacity: 0.3; transition: opacity 0.4s, background 0.4s; }
+    .dot.active { opacity: 1; background: var(--gold); }
+
+    /* ─── VALUE PROPS ─── */
     .tagline {
       font-size: clamp(20px, 3.5vw, 28px);
-      color: var(--accent);
+      color: var(--gold);
       font-weight: 600;
       font-style: italic;
       letter-spacing: -0.5px;
     }
 
-    .value-prop {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      text-align: left;
-    }
-
-    .vp-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .vp-icon {
-      width: 22px;
-      height: 22px;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .vp-item span {
-      font-size: clamp(15px, 2.2vw, 18px);
-      color: var(--text-secondary);
-      font-weight: 300;
-    }
-
-    /* ─── SLIDE DOTS ─── */
-    .slide-dots {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-top: -8px;
-    }
-
-    .dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--text-muted);
-      opacity: 0.3;
-      transition: opacity 0.4s, background 0.4s;
-    }
-
-    .dot.active {
-      opacity: 1;
-      background: var(--accent);
-    }
+    .value-prop { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+    .vp-item { display: flex; align-items: center; gap: 14px; }
+    .vp-icon { width: 22px; height: 22px; color: var(--gold); flex-shrink: 0; }
+    .vp-item span { font-size: clamp(15px, 2.2vw, 18px); color: var(--text-sec); font-weight: 300; }
 
     /* ─── FOOTER ─── */
-    footer {
-      padding: 32px 24px;
-      text-align: center;
-      width: 100%;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 12px;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--text-secondary); }
-
-    .footer-copy {
-      color: var(--text-muted);
-      font-size: 11px;
-    }
+    footer { padding: 32px 24px; text-align: center; width: 100%; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-sec); }
+    .footer-copy { color: var(--text-muted); font-size: 11px; }
 
     @media (max-width: 480px) {
       main { padding: 40px 20px 30px; gap: 36px; }
       h1 { letter-spacing: -2px; }
-      .phone { width: 230px; height: 460px; }
-      .phone-frame { border-radius: 38px; }
+      .phone { width: 240px; height: 490px; }
+      .phone-frame { border-radius: 42px; }
       .badge-img { height: 44px; }
-      .badges { gap: 10px; }
     }
   </style>
 </head>
@@ -419,20 +523,115 @@
 
   <main>
     <h1>Scripture that<br><span>speaks your language.</span></h1>
+    <p class="subtitle">Daily verses, prayer tools, and a companion that grows with your faith.</p>
 
     <div class="badges">
       <a href="#">
-        <img class="badge-img" src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+        <img class="badge-img" src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83" alt="Download on the App Store">
       </a>
     </div>
 
-    <!-- PHONE WITH REAL SCREENSHOT -->
+    <!-- ANIMATED PHONE -->
     <div class="phone">
       <div class="phone-frame">
+        <div class="dynamic-island"></div>
         <div class="phone-screen">
-          <img src="/home.png" alt="Manna app screenshot" style="width: 100%; height: 100%; object-fit: cover;">
+
+          <!-- Slide 1: Home -->
+          <div class="slide s-home active" data-slide="0">
+            <div class="home-header">
+              <div class="avatar">&#x1F54A;</div>
+              <div class="greeting-text">
+                <div class="greeting-date">Saturday, March 28</div>
+                <div class="greeting-name">welcome back, Joe</div>
+              </div>
+              <div class="streak-pill">&#x1F525; 7</div>
+            </div>
+
+            <div class="verse-card">
+              <div class="verse-card-label">Your daily drop</div>
+              <div class="verse-card-ref">Philippians 4:6</div>
+              <div class="verse-card-text">"Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God."</div>
+              <div class="topics-row">
+                <span class="topic">Peace</span>
+                <span class="topic">Prayer</span>
+              </div>
+            </div>
+
+            <div class="explain-btn">&#x1F4A1; what does this mean? &#x25BE;</div>
+
+            <div class="companion-row">
+              <div class="comp-icon">&#x1F54A;</div>
+              <div class="comp-info">
+                <div class="comp-name-text">Peace</div>
+                <div class="comp-level-text">Lv. 1 Hatchling</div>
+              </div>
+              <div class="quests-badge">Quests</div>
+            </div>
+
+            <div class="discover-label">discover</div>
+            <div class="discover-row">
+              <div class="discover-card">
+                <div class="discover-card-icon">&#x2600;</div>
+                <div class="discover-card-label">Devotions</div>
+              </div>
+              <div class="discover-card">
+                <div class="discover-card-icon">&#x1F512;</div>
+                <div class="discover-card-label">Pray</div>
+              </div>
+              <div class="discover-card">
+                <div class="discover-card-icon">&#x1F3A7;</div>
+                <div class="discover-card-label">Listen</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Prayer Lock -->
+          <div class="slide s-prayer" data-slide="1">
+            <div class="pray-title">Prayer Lock</div>
+            <div class="pray-sub">Lock your phone. Open your heart.</div>
+            <div class="timer-ring">
+              <svg viewBox="0 0 140 140">
+                <circle class="ring-bg" cx="70" cy="70" r="60"/>
+                <circle class="ring-fill" cx="70" cy="70" r="60"/>
+              </svg>
+              <div class="timer-num">7:23</div>
+            </div>
+            <div class="timer-label">remaining</div>
+            <div class="pray-prompt">Breathe in... breathe out...<br>He is with you.</div>
+          </div>
+
+          <!-- Slide 3: No Cap Mode -->
+          <div class="slide s-explain" data-slide="2">
+            <div class="exp-ref">Philippians 4:6</div>
+            <div class="exp-verse">"Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God."</div>
+            <div class="exp-toggle">&#x1F4AC; no cap mode on</div>
+            <div class="exp-text">ok so basically God is saying stop doom-scrolling your worries at 3am fr. like instead of spiraling about everything, just talk to Him about it? the gratitude part isn't toxic positivity, it's lowkey shifting your brain from "everything is falling apart" to "ok wait, some things are actually good." hits different when you try it.</div>
+          </div>
+
+          <!-- Slide 4: Companion -->
+          <div class="slide s-comp" data-slide="3">
+            <div class="comp-emoji">&#x1F54A;</div>
+            <div class="comp-name">Peace</div>
+            <div class="comp-stage">Lv. 4 Fledgling</div>
+            <div class="xp-outer"><div class="xp-inner"></div></div>
+            <div class="xp-text">62 / 100 XP to next level</div>
+            <div class="quest-row">
+              <div class="quest-item"><span class="quest-check">&#x2713;</span> Read a verse <span class="quest-xp">+3 XP</span></div>
+              <div class="quest-item"><span class="quest-check">&#x2713;</span> Journal <span class="quest-xp">+15 XP</span></div>
+              <div class="quest-item"><span style="color:var(--text-muted)">&#x25CB;</span> Pray <span class="quest-xp" style="opacity:0.3">+1 XP</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
+    </div>
+
+    <div class="slide-dots">
+      <div class="dot active" data-dot="0"></div>
+      <div class="dot" data-dot="1"></div>
+      <div class="dot" data-dot="2"></div>
+      <div class="dot" data-dot="3"></div>
     </div>
 
     <p class="tagline"><span style="color: var(--text);">Your faith journey,</span><br>your language.</p>
@@ -459,7 +658,6 @@
         <span>A companion that grows with your faith.</span>
       </div>
     </div>
-
   </main>
 
   <footer>
@@ -471,6 +669,37 @@
     <div class="footer-copy">&copy; 2026 Manna</div>
   </footer>
 
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0;
+    const durations = [3500, 3000, 3500, 3000];
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+
+      if (current === 1) {
+        const ring = document.querySelector('.ring-fill');
+        ring.style.animation = 'none';
+        ring.offsetHeight;
+        ring.style.animation = 'prayerRing 3s ease-out forwards';
+      }
+      if (current === 3) {
+        const bar = document.querySelector('.xp-inner');
+        bar.style.animation = 'none';
+        bar.offsetHeight;
+        bar.style.animation = 'xpGrow 2s ease-out forwards';
+      }
+
+      setTimeout(nextSlide, durations[current]);
+    }
+
+    setTimeout(nextSlide, durations[0]);
+  </script>
 
 </body>
 </html>
