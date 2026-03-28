@@ -426,63 +426,13 @@
       </a>
     </div>
 
-    <!-- ANIMATED PHONE -->
+    <!-- PHONE WITH REAL SCREENSHOT -->
     <div class="phone">
       <div class="phone-frame">
         <div class="phone-screen">
-
-          <!-- Slide 1: Daily Verse -->
-          <div class="slide s-verse active" data-slide="0">
-            <div class="verse-label">Your daily drop</div>
-            <div class="verse-ref">Philippians 4:6</div>
-            <div class="verse-text">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."</div>
-            <div class="verse-topics">
-              <span class="topic-pill">Peace</span>
-              <span class="topic-pill">Prayer</span>
-            </div>
-          </div>
-
-          <!-- Slide 2: Prayer Lock -->
-          <div class="slide s-prayer" data-slide="1">
-            <div class="prayer-title">Prayer Lock</div>
-            <div class="prayer-sub">Lock your phone. Open your heart.</div>
-            <div class="timer-ring">
-              <svg viewBox="0 0 120 120">
-                <circle class="ring-bg" cx="60" cy="60" r="54"/>
-                <circle class="ring-fill" cx="60" cy="60" r="54"/>
-              </svg>
-              <div class="timer-num">7:23</div>
-            </div>
-            <div class="timer-label">remaining</div>
-          </div>
-
-          <!-- Slide 3: Companion -->
-          <div class="slide s-companion" data-slide="2">
-            <div class="comp-emoji">&#x1F54A;</div>
-            <div class="comp-name">Peace</div>
-            <div class="comp-level">Lv. 4 Fledgling</div>
-            <div class="xp-bar-outer">
-              <div class="xp-bar-inner"></div>
-            </div>
-            <div class="xp-label">32 / 50 XP to next level</div>
-          </div>
-
-          <!-- Slide 4: Explanation -->
-          <div class="slide s-explain" data-slide="3">
-            <div class="explain-label">No cap mode</div>
-            <div class="explain-text">ok so basically God is saying stop doom-scrolling your worries at 3am fr. like instead of spiraling about everything, just talk to Him about it? the gratitude part isn't toxic positivity, it's lowkey shifting your brain from "everything is falling apart" to "ok wait, some things are actually good."</div>
-            <div class="nocap-toggle">&#x1F4AC; no cap mode on</div>
-          </div>
-
+          <img src="/home.png" alt="Manna app screenshot" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
       </div>
-    </div>
-
-    <div class="slide-dots">
-      <div class="dot active" data-dot="0"></div>
-      <div class="dot" data-dot="1"></div>
-      <div class="dot" data-dot="2"></div>
-      <div class="dot" data-dot="3"></div>
     </div>
 
     <p class="tagline"><span style="color: var(--text);">Your faith journey,</span><br>your language.</p>
@@ -521,40 +471,6 @@
     <div class="footer-copy">&copy; 2026 Manna</div>
   </footer>
 
-  <script>
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let current = 0;
-    const durations = [3500, 3000, 2500, 3500];
-
-    function nextSlide() {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-
-      // Re-trigger prayer ring animation
-      if (current === 1) {
-        const ring = document.querySelector('.ring-fill');
-        ring.style.animation = 'none';
-        ring.offsetHeight;
-        ring.style.animation = 'prayerRing 3s ease-out forwards';
-      }
-
-      // Re-trigger XP bar animation
-      if (current === 2) {
-        const bar = document.querySelector('.xp-bar-inner');
-        bar.style.animation = 'none';
-        bar.offsetHeight;
-        bar.style.animation = 'xpGrow 2s ease-out forwards';
-      }
-
-      setTimeout(nextSlide, durations[current]);
-    }
-
-    setTimeout(nextSlide, durations[0]);
-  </script>
 
 </body>
 </html>
