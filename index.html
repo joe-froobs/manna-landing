@@ -101,6 +101,72 @@
       padding: 44px 0 0;
     }
 
+    /* ─── STATUS BAR ─── */
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      z-index: 10;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 12px 20px 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+    }
+
+    .status-time {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-icons svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .status-battery {
+      width: 18px;
+      height: 9px;
+      border: 1px solid var(--text);
+      border-radius: 2px;
+      position: relative;
+      opacity: 0.8;
+    }
+
+    .status-battery::after {
+      content: '';
+      position: absolute;
+      right: -3px;
+      top: 2px;
+      width: 1.5px;
+      height: 4px;
+      background: var(--text);
+      border-radius: 0 1px 1px 0;
+      opacity: 0.5;
+    }
+
+    .status-battery-fill {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      bottom: 1px;
+      width: 75%;
+      background: var(--text);
+      border-radius: 1px;
+    }
+
     /* ─── DYNAMIC ISLAND ─── */
     .dynamic-island {
       position: absolute;
@@ -111,7 +177,7 @@
       height: 24px;
       background: #000;
       border-radius: 14px;
-      z-index: 10;
+      z-index: 11;
     }
 
     /* ─── SLIDES ─── */
@@ -538,6 +604,29 @@
       <div class="phone-frame">
         <div class="dynamic-island"></div>
         <div class="phone-screen">
+
+          <!-- iOS Status Bar -->
+          <div class="status-bar">
+            <span class="status-time">9:41</span>
+            <div class="status-icons">
+              <!-- Cellular -->
+              <svg viewBox="0 0 16 12" fill="var(--text)">
+                <rect x="0" y="8" width="2.5" height="4" rx="0.5"/>
+                <rect x="4" y="5.5" width="2.5" height="6.5" rx="0.5"/>
+                <rect x="8" y="3" width="2.5" height="9" rx="0.5"/>
+                <rect x="12" y="0" width="2.5" height="12" rx="0.5"/>
+              </svg>
+              <!-- WiFi -->
+              <svg viewBox="0 0 16 12" fill="none" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round">
+                <path d="M1 4.5C4 1.5 12 1.5 15 4.5"/>
+                <path d="M3.5 7C5.5 5 10.5 5 12.5 7"/>
+                <path d="M6 9.5C7 8.5 9 8.5 10 9.5"/>
+                <circle cx="8" cy="11.5" r="0.5" fill="var(--text)" stroke="none"/>
+              </svg>
+              <!-- Battery -->
+              <div class="status-battery"><div class="status-battery-fill"></div></div>
+            </div>
+          </div>
 
           <!-- Slide 1: Home -->
           <div class="slide s-home active" data-slide="0">
