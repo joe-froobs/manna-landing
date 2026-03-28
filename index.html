@@ -107,58 +107,58 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 44px;
+      height: 34px;
       z-index: 10;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      padding-top: 10px;
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text);
+      padding: 14px 0 0;
       font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+      color: var(--text);
     }
 
     .status-time {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.2px;
-      width: 70px;
+      padding-left: 18px;
+    }
+
+    .status-center {
+      width: 90px;
     }
 
     .status-icons {
       display: flex;
       align-items: center;
       gap: 3px;
-      width: 70px;
       justify-content: flex-end;
+      padding-right: 18px;
     }
 
     .status-icons svg {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
     }
 
     .status-battery {
-      width: 18px;
-      height: 9px;
-      border: 1px solid var(--text);
+      width: 16px;
+      height: 8px;
+      border: 1.2px solid var(--text);
       border-radius: 2px;
       position: relative;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .status-battery::after {
       content: '';
       position: absolute;
-      right: -3px;
-      top: 2px;
-      width: 1.5px;
+      right: -2.5px;
+      top: 1.5px;
+      width: 1.2px;
       height: 4px;
       background: var(--text);
       border-radius: 0 1px 1px 0;
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
     .status-battery-fill {
@@ -168,7 +168,7 @@
       bottom: 1px;
       width: 75%;
       background: var(--text);
-      border-radius: 1px;
+      border-radius: 0.5px;
     }
 
     /* ─── DYNAMIC ISLAND ─── */
@@ -612,6 +612,7 @@
           <!-- iOS Status Bar -->
           <div class="status-bar">
             <span class="status-time">9:41</span>
+            <div class="status-center"></div>
             <div class="status-icons">
               <!-- Cellular -->
               <svg viewBox="0 0 16 12" fill="var(--text)">
