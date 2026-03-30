@@ -108,68 +108,70 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 34px;
+      height: 44px;
       z-index: 10;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 14px 0 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 16px 8px;
       font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
       color: var(--text);
     }
 
     .status-time {
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding-left: 18px;
+      letter-spacing: 0.2px;
+      width: 54px;
     }
 
     .status-center {
-      width: 90px;
+      flex: 1;
     }
 
     .status-icons {
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 5px;
+      width: 54px;
       justify-content: flex-end;
-      padding-right: 18px;
     }
 
     .status-icons svg {
-      width: 10px;
-      height: 10px;
+      display: block;
     }
 
     .status-battery {
-      width: 16px;
-      height: 8px;
-      border: 1.2px solid var(--text);
-      border-radius: 2px;
+      width: 18.5px;
+      height: 9px;
+      border: 1px solid var(--text);
+      border-radius: 2.5px;
       position: relative;
-      opacity: 0.85;
+      opacity: 0.9;
+      margin-left: 1px;
     }
 
     .status-battery::after {
       content: '';
       position: absolute;
-      right: -2.5px;
-      top: 1.5px;
-      width: 1.2px;
+      right: -3px;
+      top: 2px;
+      width: 1.5px;
       height: 4px;
       background: var(--text);
       border-radius: 0 1px 1px 0;
-      opacity: 0.4;
+      opacity: 0.5;
     }
 
     .status-battery-fill {
       position: absolute;
-      top: 1px;
-      left: 1px;
-      bottom: 1px;
-      width: 75%;
+      top: 1.5px;
+      left: 1.5px;
+      bottom: 1.5px;
+      right: 1.5px;
+      width: auto;
       background: var(--text);
-      border-radius: 0.5px;
+      border-radius: 1px;
     }
 
     /* ─── DYNAMIC ISLAND ─── */
@@ -616,18 +618,17 @@
             <div class="status-center"></div>
             <div class="status-icons">
               <!-- Cellular -->
-              <svg viewBox="0 0 16 12" fill="var(--text)">
-                <rect x="0" y="8" width="2.5" height="4" rx="0.5"/>
-                <rect x="4" y="5.5" width="2.5" height="6.5" rx="0.5"/>
-                <rect x="8" y="3" width="2.5" height="9" rx="0.5"/>
-                <rect x="12" y="0" width="2.5" height="12" rx="0.5"/>
+              <svg width="13" height="9" viewBox="0 0 13 9" fill="var(--text)">
+                <rect x="0" y="6.5" width="2.4" height="2.5" rx="0.6"/>
+                <rect x="3.5" y="4.5" width="2.4" height="4.5" rx="0.6"/>
+                <rect x="7" y="2" width="2.4" height="7" rx="0.6"/>
+                <rect x="10.5" y="0" width="2.4" height="9" rx="0.6"/>
               </svg>
               <!-- WiFi -->
-              <svg viewBox="0 0 16 12" fill="none" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round">
-                <path d="M1 4.5C4 1.5 12 1.5 15 4.5"/>
-                <path d="M3.5 7C5.5 5 10.5 5 12.5 7"/>
-                <path d="M6 9.5C7 8.5 9 8.5 10 9.5"/>
-                <circle cx="8" cy="11.5" r="0.5" fill="var(--text)" stroke="none"/>
+              <svg width="12" height="9" viewBox="0 0 12 9" fill="var(--text)">
+                <path d="M6 7.2a1.35 1.35 0 1 1 0 2.7 1.35 1.35 0 0 1 0-2.7z"/>
+                <path d="M3.17 6.12a4.04 4.04 0 0 1 5.66 0" fill="none" stroke="var(--text)" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M1.05 3.95a7.07 7.07 0 0 1 9.9 0" fill="none" stroke="var(--text)" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
               <!-- Battery -->
               <div class="status-battery"><div class="status-battery-fill"></div></div>
